@@ -2,7 +2,8 @@
 -- Samstag große Leibniz nur bis 19.12.2026; Willi-Bull 09.01.–20.03.2027.
 with dates as (select d::date slot_date,extract(isodow from d)::int dow from generate_series('2026-10-19'::date,'2027-03-31'::date,interval '1 day') d),
 rules as (
- select slot_date,'gross'::text hall,960 start_m,1080 end_m from dates where dow=2
+ select slot_date,'soccer'::text hall,960 start_m,1050 end_m from dates where dow=1
+ union all select slot_date,'gross'::text hall,960 start_m,1080 end_m from dates where dow=2
  union all select slot_date,'gross',990,1320 from dates where dow=4
  union all select slot_date,'klein',960,1020 from dates where dow=2
  union all select slot_date,'klein',1260,1320 from dates where dow=3 and slot_date<='2026-12-16'
