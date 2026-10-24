@@ -20,7 +20,7 @@ select exists(select 1 from public.profiles where id=(select auth.uid()) and rol
 create table if not exists public.slots (
  id bigint generated always as identity primary key,
  day date not null check(day between '2026-10-19' and '2027-03-31'),
- hall text not null check(hall in ('gross','klein','willi')),
+ hall text not null check(hall in ('gross','klein','willi','soccer')),
  start_time time not null check(start_time >= '14:00' and start_time < '22:00' and extract(minute from start_time) in (0,30)),
  assigned_team text check(assigned_team in ('G','F','E','D')),
  unique(day,hall,start_time)
