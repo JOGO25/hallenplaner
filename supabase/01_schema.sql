@@ -3,7 +3,7 @@ create table if not exists public.profiles (
  id uuid primary key references auth.users(id) on delete cascade,
  display_name text,
  role text not null default 'pending' check(role in ('pending','trainer','admin')),
- team text check(team in ('G','F','E','D')),
+ team text check(team in ('G','F','E','D','FOERDER')),
  constraint trainer_team check(role <> 'trainer' or team is not null)
 );
 create or replace function public.make_profile() returns trigger language plpgsql security definer set search_path = '' as $$
@@ -22,12 +22,12 @@ create table if not exists public.slots (
  day date not null check(day between '2026-10-19' and '2027-03-31'),
  hall text not null check(hall in ('gross','klein','willi','soccer')),
  start_time time not null check(start_time >= '14:00' and start_time < '22:00' and extract(minute from start_time) in (0,30)),
- assigned_team text check(assigned_team in ('G','F','E','D')),
+ assigned_team text check(assigned_team in ('G','F','E','D','FOERDER')),
  unique(day,hall,start_time)
 );
 create table if not exists public.applications (
  slot_id bigint not null references public.slots(id) on delete cascade,
- team text not null check(team in ('G','F','E','D')),
+ team text not null check(team in ('G','F','E','D','FOERDER')),
  created_at timestamptz not null default now(),
  primary key(slot_id,team)
 );
